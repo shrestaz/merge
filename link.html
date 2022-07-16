@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Frontend</title>
+  </head>
+  <body onload="getLinkToken()">
+    <button id="open-link-button">Start linking</button>
+    <script src="https://cdn.merge.dev/initialize.js"></script>
+    <script type="text/javascript">
+      const linkButton = document.getElementById("open-link-button");
+      linkButton.disabled = true;
+      let linkToken;
+
+      // Step 1: Request to the backend to create a link token and return it to the frontend.
+      // This function is called on document load, see line 7
+      function getLinkToken() {
+        fetch("http://127.0.0.1:8000/create-link-token").then((response) => {
+          if (response.status === 200) {
+            return response.json().then((data) => {
+              linkToken = data;
+              console.log(`Step 1: Link token from backend: ${linkToken}`);
+            });
+          } else {
+            console.log("Error: " + response.statusText);
+          }
+        });
+      }
+
+      // Step 3: Send public_token to server
+      // This never gets called
+      function onSuccess(public_token) {
+        console.log(
+          `Step 3: Swapping public token for account token. Public token was: ${public_token}`
+        );
+        fetch(`http://127.0.0.1:8000/retrieve_account_token/${linkToken}`).then(
+          (response) => {
+            if (response.status === 200) {
+              return response.json().then((data) => {
+                console.log(`Step 3: Account token from backend: ${data}`);
+              });
+            } else {
+              console.log("Error: " + response.statusText);
+            }
+          }
+        );
+      }
+
+      MergeLink.initialize({
+        // Replace ADD_GENERATED_LINK_TOKEN with the token retrieved from your backend (Step 1)
+        linkToken: linkToken,
+        onSuccess: (public_token) => onSuccess(public_token),
+        onReady: () => (linkButton.disabled = false),
+        // A value of `true` for `shouldSendTokenOnSuccessfulLink` makes Link call `onSuccess`
+        // immediately after an account has been successfully linked instead of after the user
+        // closes the Link modal.
+        shouldSendTokenOnSuccessfulLink: true,
+      });
+
+      linkButton.addEventListener("click", function () {
+        console.log(`Step 2: Initializing Link with linkToken: ${linkToken}`);
+        MergeLink.openLink();
+      });
+    </script>
+  </body>
+</html>
