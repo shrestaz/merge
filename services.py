@@ -28,11 +28,3 @@ def retrieve_account_token(public_token):
 
     account_token = account_token_result.json().get("account_token")
     return account_token  # Save this in your database
-
-
-"""
-Notes:
-    uoi: f208e489-fafe-4de0-a231-b722042ce4ff
-    uon: Dataminr Test User GZCLQS61
-    uae: pgalfidmcom
-    """

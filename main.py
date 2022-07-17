@@ -8,7 +8,8 @@ app = FastAPI()
 
 origins = [
     "http://localhost:8080",
-    "http://localhost:63342"
+    "http://localhost:63342",  # Serving HTML file from PyCharm
+    "http://127.0.0.1:5500"  # Serving HTML file from VS Code
 ]
 
 app.add_middleware(
