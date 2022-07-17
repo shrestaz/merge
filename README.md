@@ -4,10 +4,12 @@
 
 Following the steps to make Link appear in the frontend [here](https://www.merge.dev/docs/get-started/link/#step-2), I am unable to get it working.
 
-On initiation of MergeLink `MergeLink.initialize()`, the `onSuccess()` callback function does not seem to be called. There are console logs added on each step of initialization process.
+On initiation of MergeLink `MergeLink.initialize()`, the `onSuccess()` callback function does not seem to be called. There are console logs added on each step of initialization process. An error from `rocket-loader.min.js` is logged on document load, so possibly a CDN issue?
 
 ### Demo of issue:
-https://user-images.githubusercontent.com/9460504/179392305-13b4895e-758c-4fd7-b084-9efdc7d1d981.mp4
+Click on gif enlarge 🔍
+
+<img src="https://user-images.githubusercontent.com/9460504/179392423-8a43331d-3076-43c8-91cb-472d4d026b37.gif" width=500px>
 
 
 ### Tech stack:
